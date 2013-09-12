@@ -1,0 +1,104 @@
+html, body{ height: 100% }
+
+body { color: #555; font-family: 'Trebuchet MS', Verdana; line-height: 125%; }
+
+a { text-decoration: none; color: #357bb2; }
+a:hover { border-bottom: 1px dotted #888; }
+
+header { margin-bottom: 25px; background: #555; color: #fff; }
+header h1 { padding: 25px 0; }
+header h1 span { color: #ccc; }
+
+.cell { display: inline-block; }
+
+.tools ul { background: #eee; }
+.tools ul li { padding: 10px; margin-right: 15px; display: inline-block; font-size: 18px; }
+.tools ul li.active { background: #555; color: #ccc; }
+
+section { margin-bottom: 35px; text-align: center; }
+section .container, header .container { margin: 0 auto; width: 950px; text-align: left; }
+
+input[type="text"], input[type="password"] { padding: 5px; border: 1px solid #333; font-size: 15px; }
+select { padding: 5px; font-size: 35px; }
+select option { padding: 10px; }
+button { padding: 5px; background: #357bb2; color: #fff; border: none; cursor: pointer; }
+.actions button { margin: 0 10px 0 0; font-size: 15px; }
+.actions a { margin: 0 10px 0 0; padding: 5px; background: #357bb2; color: #fff; font-size: 15px; }
+.actions button.active { background: #333; }
+.actions form { display: none; padding: 10px; background: #333; }
+.actions form button { margin-left: 7px; }
+.actions.show form { display: block; }
+
+.message h2 { padding: 10px; background: orange; font-size: 20px; font-weight: bold; color: #fff; border-radius: 4px; box-shadow: 0 0 10px #999;}
+
+.formOption { margin: 0 0 15px; }
+.formOption label { display: inline-block; width: 200px; }
+.formButtonRow button { font-size: 20px; }
+
+.list ul { margin: 0; padding: 0 0 7px; background: #ccc; }
+.list li { padding: 5px 7px; }
+.list li div { margin-left: 10px; padding: 5px 7px; clear: none; float: left; background: #fff; position: relative; }
+.list li div .mobile { display: none; color: #aaa;}
+.list li.definition div { background: #ccc; color: #333; font-weight: bold; }
+.list li div:first-child { margin-left: 0; }
+
+/* statii */
+.list li .status span { display: block; width: 70px; background: red; border-radius: 4px; }
+.list li .status .yes { background: green; }
+.list li .status .no { background: red; }
+.list li .status .maybe { background: yellow; }
+
+/* users page -- multiple user view */
+.users .list li .name { width: 270px; }
+.users .list li .email { width: 270px; }
+.users .list li .email .btn { padding: 0 5px; position: absolute; right: 7px; font-size: 12px; background: #555; color: #fff; border-radius: 4px; }
+.users .list li .codes { width: 220px; }
+.users .list li .status { width: 70px; }
+
+/* users page -- single user view */
+.user table { width: 100%; }
+.user .cell { border-spacing: 10px; border-collapse: collapse; padding: 30px 0; width: 50%; }
+.user .spacer { width: 20px; }
+.user .cell.name { background: #555; color: #fff; }
+.user .cell.name p, .user .cell.name h2 { margin: 0 30px; }
+.user .cell.name p { margin-bottom: 10px; }
+.user .cell.name h2 { font-size: 40px; font-weight: bold; line-height: 100%;}
+.user .cell.info p { padding: 5px; font-size: 15px; background: #ccc; color: #333; }
+
+.user .list li .name { width: 270px; }
+.user .list li .email { width: 270px; }
+.user .list li .email .btn { padding: 0 5px; position: absolute; right: 7px; font-size: 12px; background: #555; color: #fff; border-radius: 4px; }
+.user .list li .codes { width: 220px; }
+.user .list li .status { width: 70px; }
+
+/* issues page */
+.issues .list li .id { width: 40px; }
+.issues .list li .name { width: 200px; }
+.issues .list li .collections { width: 530px; }
+.issues .list li .owners { width: 60px; }
+
+/* collections page */
+.collections .list li .id { width: 40px; }
+.collections .list li .name { width: 850px; }
+
+/* admin page */
+.admin .list li .id { width: 30px; }
+.admin .list li .name { width: 230px; }
+.admin .list li .email { width: 600px; }
+
+/* public page */
+legend { margin-bottom: 25px; font-size: 40px; font-weight: bold; color: #333; line-height: 100%; }
+input[type="text"] { padding: 5px; background: #333; color: #ccc; font-size: 15px; border: none; }
+.formHelp { font-weight: bold; color: #555; }
+
+
+@media screen and (max-width: 949px) {
+
+section .container, header .container { width: 100%; }
+.list ul { padding: 7px 0; }
+.list li { margin-bottom: 7px; padding: 7px 0; }
+.list li.definition { display: none; }
+.list li div { margin-left: 0; padding: 5px 7px; clear: both; float: none; width: 100% !important; }
+.list li div .mobile { display: inline; }
+
+}
