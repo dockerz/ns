@@ -73,5 +73,28 @@ $(document)
 					}
 				});
 			});
+			
+		$('.actions .action')
+			.click(function() {
+//				$('header').after('<section class="message"><div class="container"><h2>something happened</h2></div></section>');
+			});
+			
+		$('body')
+			.on('click', '.message', function() {
+				$('.message').remove();
+			});
+			
+		$('.action.owned')
+			.click(function () {
+				var newClass = 'inactive',
+					newText = 'no';
+				if ($(this).hasClass('inactive')) {
+						newClass = 'active';
+						newText = 'yes';
+				}
+				$(this)
+					.attr('class', 'action owned ' + newClass)
+					.text(newText);
+			});
 
 	});

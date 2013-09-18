@@ -5,13 +5,16 @@
 	// client specific constants
 	define ('DEV', TRUE);
 	define ('USER_INFO', TRUE);
-	define ('ROOT', '../');
+	define ('ROOT', '../'); // this can be removed
 	define ('CLIENT', 'Cinefex');
+	define ('POLICY_LIMIT', '5'); // how many max promo codes a user is allowed
 	define ('DOMAIN', 'munumunu.com');
 	define ('LOGIN', 'http://www.' . DOMAIN . '/admin/'); // where the new admin link takes new admins from invitation email
+	define ('DELIMITER', ','); // delimiter for db queries
 	
 	// email constants
-	// set the webmaster's email account to webmaster@foo.com. if this is not set, someone may not get an email, as it may be rendered spam by the receiving isp.
+	// set the webmaster's email account to webmaster@foo.com. this email address must actually exist.
+	// if this address doesn't exist, someone may not get an email, as it may be rendered spam by the receiving isp.
 	define ('MESSAGE_HEADERS', "From: webmaster@" . DOMAIN . "\nReply-To: webmaster@" . DOMAIN . "\nX-Mailer: PHP/" . phpversion()) ;
 
 	// db setup
@@ -35,10 +38,12 @@
 	function salty ($p) { // sha1 & md5 double encryption for extra security
 		return sha1 (escape_data ($p)) . md5 (escape_data ($p));		
 	}
-	
-	function get_user_id_from_email ($id) {
-		list ($result) = mysqli_fetch_row (mysqli_query ($mysqli, "SELECT `id` FROM `user` WHERE `email` = " . escape_data ($id) . " LIMIT 1"));
-		return $result;
+
+	function indexof ($needle, $haystack) {
+		if ($needle == (preg_replace ('/' . DELIMITER . '.*/', '', $haystack))): return TRUE; endif;
+		if (strpos ($haystack, DELIMITER . $needle . DELIMITER)): return TRUE; endif;
+		if ($needle == (preg_replace ('/.*' . DELIMITER . '/', '', $haystack))): return TRUE; endif;
+		return FALSE;
 	}
 
 ?>

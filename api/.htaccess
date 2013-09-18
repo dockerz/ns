@@ -2,6 +2,6 @@ RewriteEngine On
 
 #			uri											action
 RewriteRule ^redeem_promo_code/(.*)/(.*)/$ 				?action=redeem_promo_code&device_uuid=$1&promo_code=$2
-RewriteRule ^inventory_list/(.*)/$ 						?action=inventory_list&device_uuid=$1
 RewriteRule ^get_issue_token/(.*)/(.*)/$ 				?action=get_issue_token&device_uuid=$1&issue_number=$2
-RewriteRule ^download_content/(.*)/(.*)/$ 				?action=download_content&token=$1&device_uuid=$2
+RewriteRule ^download_content/(.*)/(.*)/$ 				?action=download_content&device_uuid=$1&token=$2
+RewriteRule ^inventory_list/(.*)/$ 						?action=inventory_list&device_uuid=$1

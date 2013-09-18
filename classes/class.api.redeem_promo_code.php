@@ -4,13 +4,14 @@
 		
 		private $device_uuid;
 		private $promo_code;
+		private $clean_code;
 		private $user_id;
-		private $policy_limit = 4; // arbitrary value for dev purposes only.
 		
 		function __construct ($data) {
 
 			$this->device_uuid = $data['device_uuid'];
 			$this->promo_code = $data['promo_code'];
+			$this->clean_code = str_replace ('-', '', $data['promo_code']);
 
 		}
 
@@ -37,7 +38,7 @@
 				
 				// device not registered.
 				
-				if (($this->device_count()) >= $this->policy_limit) { // assess if policy_limit has been reached
+				if (($this->device_count()) >= POLICY_LIMIT) { // assess if policy_limit has been reached
 
 					$data = array ('0', 'Too many devices active'); // policy limit reached. disallow.
 
@@ -64,14 +65,14 @@
 			return $this -> response ($data);
 
 		}
-		
+
 		private function is_valid () { // get from chris what a valid promo code looks like.
-			return TRUE;
+			return (preg_match ("/^[A_Z0-9]{4}-[A_Z0-9]{4}-[A_Z0-9]{4}-[A_Z0-9]{4}$/", $this->promo_code)) ? TRUE : FALSE;
 		}
 
 		private function code_exists () {
 			GLOBAL $mysqli;
-			list ($result) = mysqli_fetch_row (mysqli_query ($mysqli, "SELECT `user_id` FROM `promo_code` WHERE `code` = '" . $this->promo_code . "' LIMIT 1"));
+			list ($result) = mysqli_fetch_row (mysqli_query ($mysqli, "SELECT `user_id` FROM `promo_code` WHERE `code` = '" . $this->clean_code . "' LIMIT 1"));
 			return $result;
 		}
 
@@ -83,7 +84,7 @@
 				return FALSE;
 			}			
 		}
-		
+
 		private function device_count () {
 			GLOBAL $mysqli;
 			list ($result) = mysqli_fetch_row (mysqli_query ($mysqli, "SELECT COUNT(`user_id`) FROM `user_device` WHERE `user_id` = '" . $this->user_id . "'"));
@@ -97,7 +98,7 @@
 
 		private function update_promo_code () {
 			GLOBAL $mysqli;
-			return mysqli_query ($mysqli, "UPDATE `promo_code` SET `date_redeemed` = '" . time (). "' WHERE `code` = '" . $this->promo_code. "' AND `user_id` = '" . $this->user_id . "' LIMIT 1");
+			return mysqli_query ($mysqli, "UPDATE `promo_code` SET `date_redeemed` = '" . time (). "' WHERE `code` = '" . $this->clean_code . "' AND `user_id` = '" . $this->user_id . "' LIMIT 1");
 		}
 
 	}

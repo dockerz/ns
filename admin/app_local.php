@@ -11,12 +11,10 @@
 			} else {
 				$message = 'try again.';
 			}
-		} else {
-			require ROOT . 'includes/header.php';
-			echo "<section class=\"actions show\"><div class=\"container\"><form action=\"" . $_SERVER['PHP_SELF'] . "\" method=\"post\" accept-charset=\"utf-8\"><p class=\"form\"><input type=\"text\" name=\"e\" placeholder=\"email\" /> <input type=\"password\" name=\"p\" placeholder=\"password\" /><button type=\"submit\">login</button></p></form></div></section>";
-			require ROOT . 'includes/footer.php';
-			exit;
 		}
+
+		$l = ($_GET['page'] == 'dashboard') ? 'index.php' : $_GET['page'] . '.php';
+
 	}
 
 ?>

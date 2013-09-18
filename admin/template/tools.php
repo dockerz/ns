@@ -26,3 +26,18 @@
 		</div>
 	</div>
 </section>
+<section class="divider">
+	<div class="container">
+		<hr />
+	</div>
+</section>
+<section class="own">
+	<div class="container">
+		<div class="formOption">
+			<form action="tools.php" method="post" accept-charset="utf-8">
+				<input type="hidden" name="generate_ownership" value="1" />
+				<p><strong>give users issues according to donation amount</strong> <button type="submit">do it!</button></p>
+			</form>
+		</div>
+	</div>
+</section>

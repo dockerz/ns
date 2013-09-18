@@ -3,6 +3,7 @@ RewriteEngine On
 #			uri											action
 RewriteRule ^issues.php$ 								?page=issues&%{QUERY_STRING}
 RewriteRule ^users.php$ 								?page=users&%{QUERY_STRING}
+RewriteRule ^add_user.php$ 								?page=add_user&%{QUERY_STRING}
 RewriteRule ^collections.php$ 							?page=collections&%{QUERY_STRING}
 RewriteRule ^admin.php$ 								?page=admin&%{QUERY_STRING}
 RewriteRule ^tools.php$ 								?page=tools&%{QUERY_STRING}

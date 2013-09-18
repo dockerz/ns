@@ -12,6 +12,67 @@
 	}
 
 	*/
+
+	if (isset ($_POST['generate_ownership'])) {
+
+		mysqli_query ($mysqli, "TRUNCATE TABLE `user_issue_index`");
+
+		$collection = array ();
+		$r = mysqli_query ($mysqli, "SELECT `id`, `data`, `amount` FROM `collections`");
+		while (list ($id, $name, $amount) = mysqli_fetch_row ($r)) {
+			$collection[$amount] = array ('id' => $id, 'name' => $name);
+			$r1 = mysqli_query ($mysqli, "SELECT `issue_id` FROM `issue_collection` WHERE `collection_id` = " . $id);
+			while (list ($iid) = mysqli_fetch_row ($r1)) {
+				$collection[$amount]['issues'][] = $iid;
+			}
+			mysqli_free_result ($r1);
+		}
+		mysqli_free_result ($r);
+		
+		$tier = array (1 => 20, 25, 35, 40, 50, 60, 100, 250);
+
+		$r = mysqli_query ($mysqli, "SELECT `user_id`, `amount` FROM `user_info` ORDER BY `amount` ASC");
+
+		$a = 0;
+
+		while ($row = mysqli_fetch_assoc ($r)) {
+
+			$issues = array ();
+
+			if (($row['amount'] >= $tier[1]) && ($row['amount'] < $tier[2])) {
+//				$a = $a + count ($collection[$tier[1]]['issues']);
+				$issues = $collection[$tier[1]]['issues'];
+			} elseif (($row['amount'] >= $tier[2]) && ($row['amount'] < $tier[3])) {
+//				$a = $a + count ($collection[$tier[2]]['issues']);
+				$issues = $collection[$tier[2]]['issues'];
+			} elseif (($row['amount'] >= $tier[3]) && ($row['amount'] < $tier[4])) {
+//				$a = $a + count ($collection[$tier[3]]['issues']);
+				$issues = $collection[$tier[3]]['issues'];
+			} elseif (($row['amount'] >= $tier[4]) && ($row['amount'] < $tier[5])) {
+//				$a = $a + count ($collection[$tier[4]]['issues']);
+				$issues = $collection[$tier[4]]['issues'];
+			} elseif (($row['amount'] >= $tier[5]) && ($row['amount'] < $tier[6])) {
+//				$a = $a + count ($collection[$tier[5]]['issues']);
+				$issues = $collection[$tier[5]]['issues'];
+			} elseif (($row['amount'] >= $tier[6]) && ($row['amount'] < $tier[7])) {
+//				$a = $a + count ($collection[$tier[6]]['issues']);
+				$issues = $collection[$tier[6]]['issues'];
+			} elseif (($row['amount'] >= $tier[7]) && ($row['amount'] < $tier[8])) {
+//				$a = $a + count ($collection[$tier[7]]['issues']);
+				$issues = $collection[$tier[7]]['issues'];
+			} elseif ($row['amount'] >= $tier[8]) {
+				$issues = $collection[$tier[8]]['issues'];
+			}
+
+			mysqli_query ($mysqli, "INSERT INTO `user_issue_index` (`user_id`, `data`) VALUES ('" . $row['user_id'] . "', '" . implode (',', $issues) . "')");
+
+		}
+
+//		echo $a;
+
+		mysqli_free_result ($r);
+
+	}
 	
 	if ((isset ($_POST['import'])) && ($_FILES['upload']['type'] == 'text/csv')) {
 

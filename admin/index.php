@@ -15,7 +15,7 @@
 
 	// render page
 	require ROOT . 'includes/header.php';
-	require 'template/' . LOCATION . '.php';
+	if (isset ($_SESSION['admin'])): require 'template/' . LOCATION . '.php'; else: require 'template/login.php'; endif;
 	require ROOT . 'includes/footer.php';
 
 ?>
