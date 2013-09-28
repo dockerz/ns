@@ -6,7 +6,7 @@
 	DEFINE ("LOCATION", $_GET['page']);
 
 	if (($_GET['page'] == 'users') && (isset ($_GET['uid']))): DEFINE ('BODY_CLASS', 'user'); else: DEFINE ('BODY_CLASS', $_GET['page']); endif;
-	if (isset ($_GET['sort'])): $sort = explode('_', $_GET['sort']); DEFINE ('SORT', $sort[1]); else: DEFINE ('SORT', 'ASC'); endif;
+	if (isset ($_GET['sort'])): $sort = explode('_', $_GET['sort']); DEFINE ('SORT', $sort[1]); else: DEFINE ('SORT', 'DESC'); endif;
 
 	// load controllers
 	require '../app_global.php';
@@ -15,7 +15,7 @@
 
 	// render page
 	require ROOT . 'includes/header.php';
-	if (isset ($_SESSION['admin'])): require 'template/' . LOCATION . '.php'; else: require 'template/login.php'; endif;
+	if (ADMIN): require 'template/' . LOCATION . '.php'; else: require 'template/login.php'; endif;
 	require ROOT . 'includes/footer.php';
 
 ?>

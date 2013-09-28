@@ -14,8 +14,18 @@
 
 		public function get_response () {
 			
-			return $this -> response (array ('success' => 1, 'data' => 'foo'));
+			require $_SERVER['DOCUMENT_ROOT'] . '/classes/class.token.php';
+			$token = new token;
+			$token_array = $token -> destruct ($this->token);
 
+			$data = array ('1', 'Deliver content', 'text');
+
+			return $this -> response ($data);
+
+		}
+
+		private function validate () {
+			return TRUE;
 		}
 
 	}

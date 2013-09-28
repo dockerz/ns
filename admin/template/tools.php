@@ -20,7 +20,7 @@
 	<div class="container">
 		<div class="formOption">
 			<form action="tools.php" method="post" accept-charset="utf-8">
-				<input type="hidden" name="generate" value="1" />
+				<input type="hidden" name="generate_codes" value="1" />
 				<p><strong>generate promo codes for all users who don't have one</strong> <button type="submit">do it!</button></p>
 			</form>
 		</div>
@@ -29,15 +29,5 @@
 <section class="divider">
 	<div class="container">
 		<hr />
-	</div>
-</section>
-<section class="own">
-	<div class="container">
-		<div class="formOption">
-			<form action="tools.php" method="post" accept-charset="utf-8">
-				<input type="hidden" name="generate_ownership" value="1" />
-				<p><strong>give users issues according to donation amount</strong> <button type="submit">do it!</button></p>
-			</form>
-		</div>
 	</div>
 </section>

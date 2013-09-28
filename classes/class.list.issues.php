@@ -23,12 +23,13 @@
 
 				switch ($this->show) {
 					case 'count':
-						$v1['owned'] = $this->get_count();
+						$v1['owned'] = '';
 						$own = '';
 						break;
 
 					case 'ownership':
 						$own = ($v1['owned'] == 'yes') ? ' active': ' inactive';
+						$own = "<div class=\"ownership\"><span id=\"id-" . $k1 . "\" class=\"action own" . $own . "\">" . $v1['owned'] . "</div>";
 						break;
 				}
 
@@ -41,7 +42,7 @@
 					$cols[] = '&nbsp;';
 				}
 
-				$list_data .= "\n<li class=\"cf\"><div class=\"id\"><span class=\"mobile id\">id: </span>" . $k1 . "</div><div class=\"collections\"><span class=\"mobile collections\">collections: </span>" . implode (', ', $cols) . "</div><div class=\"ownership\"><span id=\"id-" . $k1 . "\" class=\"action own" . $own . "\">" . $v1['owned'] . "</div></li>";
+				$list_data .= "\n<li class=\"cf\"><div class=\"id\"><span class=\"mobile id\">id: </span>" . $k1 . "</div><div class=\"collections\"><span class=\"mobile collections\">collections: </span>" . implode (', ', $cols) . "</div>" . $own . "</li>";
 
 			}
 
@@ -60,12 +61,8 @@
 		}
 		
 		private function list_header () {
-			$extras = ($this->show == 'count') ? "<div class=\"own\"># of owners</div>" : "<div class=\"own\">owned</div>";
+			$extras = ($this->show == 'count') ? "" : "<div class=\"own\">owned</div>";
 			return "<li class=\"definition cf\"><div class=\"id\">id</div><div class=\"collections\">collections</div>" . $extras . "</li>";
-		}
-
-		private function get_count () {
-			return 1;
 		}
 
 		private function generate () {
@@ -77,7 +74,7 @@
 			}
 			
 			if ($this->id_type == 'cid') {
-				$sql = "SELECT `issue`.`id`, `issue`.`name` FROM `issue`, `issue_collection` WHERE `issue_collection`.`collection_id` = " . $this->id . " AND `issue_collection`.`issue_id` = `issue`.`id` ORDER BY `id` ASC";
+				$sql = "SELECT `issue`.`id`, `issue`.`name` FROM `issue`, `issue_collection` WHERE `issue_collection`.`collection_id` = " . $this->id . " AND `issue_collection`.`issue_id` = `issue`.`id` ORDER BY `id` DESC";
 			} else {
 				if ($this->sorted) { // sort db results from "sort" dropdown
 					$sort = explode ('_', $this->sorted);
@@ -86,11 +83,11 @@
 							$sql = "SELECT * FROM `issue` ORDER BY `" . escape_data ($sort[0]) . "` " . escape_data ($sort[1]);
 							break;
 						default: // sort by quantity popularity
-							$sql = "SELECT * FROM `issue` ORDER BY `id` ASC";
+							$sql = "SELECT * FROM `issue` ORDER BY `id` DESC";
 							break;
 					}
 				} else { // standard sort -- user_id, asc
-					$sql = "SELECT * FROM `issue` ORDER BY `id` ASC";
+					$sql = "SELECT * FROM `issue` ORDER BY `id` DESC";
 				}
 			}
 			

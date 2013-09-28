@@ -1,7 +1,5 @@
 <?php	
 
-	session_start ();
-
 	// client specific constants
 	define ('DEV', TRUE);
 	define ('USER_INFO', TRUE);
@@ -11,6 +9,7 @@
 	define ('DOMAIN', 'munumunu.com');
 	define ('LOGIN', 'http://www.' . DOMAIN . '/admin/'); // where the new admin link takes new admins from invitation email
 	define ('DELIMITER', ','); // delimiter for db queries
+	define ('COOKIE_TIME', 31104000); // time in which admin cookie expires
 	
 	// email constants
 	// set the webmaster's email account to webmaster@foo.com. this email address must actually exist.

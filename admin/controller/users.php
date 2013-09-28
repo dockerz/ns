@@ -46,7 +46,8 @@
 
 			default: // show issue list
 
-				$actions = '<a href="users.php?uid=' . $_GET['uid'] . '&view=codes">view codes</a><a href="users.php?uid=' . $_GET['uid'] . '&view=devices">view devices</a> | <button class="action update_ownership">update ownership</button>';
+				$actions = '<a href="users.php?uid=' . $_GET['uid'] . '&view=codes">view codes</a><a href="users.php?uid=' . $_GET['uid'] . '&view=devices">view devices</a>';
+				if (ADMIN_SUPER): $actions .= ' | <button class="action update_ownership">update ownership</button>'; endif;
 				$list_type = "issues";
 				
 				require $_SERVER['DOCUMENT_ROOT'] . '/classes/class.list.issues.php';

@@ -4,7 +4,7 @@ $(document)
 		$('section.tools .' + page.location)
 			.addClass('active')
 			.html('<span>' + page.location + '</span>');
-			
+
 		$('.actions .action')
 			.click(function() {
 				$this = $(this);
@@ -21,13 +21,12 @@ $(document)
 					$('form[name="' + thisClass + '"]').show();
 				}
 			});
-		
+
 		$('button[type="button"]')
 			.click(function() {
 				var l = $('body').attr('class'),
 					inputData = {},
 					newItem = $('.list ul li:nth-child(2)').clone();
-				
 				switch (l) {
 					case 'admin':
 						inputData.e = $('form[name="add"] input[name="e"]').val();
@@ -41,6 +40,9 @@ $(document)
 						msg = new Array ('you have added a collection. you can now attach it to an issue.', 'collection not created.', 'there was a problem creating this collection. please contact your webmaster.');
 						break;
 					case 'issues':
+						inputData.n = $('form[name="add_issue"] input[name="issue_number"]').val();
+						console.log(inputData);
+						msg = new Array ('issue # ' +  inputData.n + ' added.', 'new issue not added. please contact the webmaster.', 'new issue not added. please contact the webmaster.');
 						break;
 				}
 				$.ajax({
@@ -55,11 +57,11 @@ $(document)
 									break;
 							}
 							switch (page.sort) {
-								case 'DESC':
-									$('.list ul li:nth-child(2)').before(newItem);
+								case 'ASC':
+									$('.list ul li:last').after(newItem);
 									break;
 								default:
-									$('.list ul li:last').after(newItem);
+									$('.list ul li:nth-child(2)').before(newItem);
 									break;
 							}
 							alert(msg[0]);
@@ -84,7 +86,7 @@ $(document)
 				$('.message').remove();
 			});
 			
-		$('.action.owned')
+		$('.action.own')
 			.click(function () {
 				var newClass = 'inactive',
 					newText = 'no';
@@ -93,7 +95,7 @@ $(document)
 						newText = 'yes';
 				}
 				$(this)
-					.attr('class', 'action owned ' + newClass)
+					.attr('class', 'action own ' + newClass)
 					.text(newText);
 			});
 

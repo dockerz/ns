@@ -17,51 +17,32 @@
 
 		public function get_response () {
 
-			if ($this->is_valid() !== TRUE): $data = array ('0', 'Invalid Promo Code'); endif; // see if promo code is valid. if no, define fail response.
-
+			if ($this->is_valid() !== TRUE): $data = array ('0', 'Invalid Promo Code', 'text'); endif; // see if promo code is valid. if no, define fail response.
 			// if fail response not defined, proceed with search for promo code -- if ($result == TRUE), is user_id
-
 			if ((!isset ($data)) && (($result = $this->code_exists()) == TRUE)) {
-
 				$this->user_id = $result;
 				unset ($result);
-
 			} else {
-
-				$data = array ('0', 'Invalid Promo Code'); // code does not exist in database, define fail response.
-
+				$data = array ('0', 'Invalid Promo Code', 'text'); // code does not exist in database, define fail response.
 			}
 
 			// if fail response not defined, look to see if device is registered
-
 			if ((!isset ($data)) && (!$this->device_is_registered())) {
-				
 				// device not registered.
-				
 				if (($this->device_count()) >= POLICY_LIMIT) { // assess if policy_limit has been reached
-
-					$data = array ('0', 'Too many devices active'); // policy limit reached. disallow.
-
+					$data = array ('0', 'Too many devices active', 'text'); // policy limit reached. disallow.
 				} else {
-
 					$this->add_device(); // policy limit not reached. add this device to `user_device`.
-
 				}
-				
 			}
 
 			if (!isset ($data)) { // if fail response not defined, proceed.
-				
 				if ($this->update_promo_code()) { // update promo code with present time
-					
 					// 1 step missing -- insert/update `user_issue` with what's in `promo_code_issues` -- no idea how this works
-					
-					$data = array ('1', 'Promo Code redeemed');
-					
+					$data = array ('1', 'Promo Code redeemed', 'text');	
 				}
-				
 			}
-			
+
 			return $this -> response ($data);
 
 		}

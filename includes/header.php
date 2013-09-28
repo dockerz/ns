@@ -23,6 +23,7 @@
 	<?php
 
 		// admin section navigation. current location is determined by javascript.
-		echo ($_SESSION['admin'] && (LOCATION !== 'public')) ? "<section class=\"tools\"><div class=\"container\"><ul><li class=\"dashboard\"><a href=\"index.php\">dashboard</a></li><li class=\"users\"><a href=\"users.php\">users</a></li><li class=\"issues\"><a href=\"issues.php\">issues</a></li><li class=\"collections\"><a href=\"collections.php\">collections</a></li><li class=\"admin\"><a href=\"admin.php\">admin</a></li><li><a href=\"index.php?logout=true\">logout</a></li></ul></div></section>" : "";
+		$admin = (ADMIN_SUPER) ? "<li class=\"admin\"><a href=\"admin.php\">admin</a></li>" : "";
+		echo (ADMIN && (LOCATION !== 'public')) ? "<section class=\"tools\"><div class=\"container\"><ul><li class=\"dashboard\"><a href=\"index.php\">dashboard</a></li><li class=\"users\"><a href=\"users.php\">users</a></li><li class=\"issues\"><a href=\"issues.php\">issues</a></li><li class=\"collections\"><a href=\"collections.php\">collections</a></li>" . $admin . "<li><a href=\"index.php?logout=true\">logout</a></li></ul></div></section>" : "";
 
 	?>

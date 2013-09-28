@@ -29,6 +29,7 @@
 		}
 
 		private function collection ($amount) {
+
 			GLOBAL $mysqli;
 
 			$tier = array (1 => 20, 25, 35, 40, 50, 60, 100, 250, 315, 500, 1000);
@@ -74,14 +75,14 @@
 				$sort = explode ('_', $this->sorted);
 				switch ($sort[0]) {
 					case 'id': // sort by id
-						$sql = "SELECT `user`.*, `user_info`.`amount` FROM `user`, `user_info` WHERE `user_info`.`user_id` = `user`.`id` ORDER BY `user`.`" . escape_data ($sort[0]) . "` " . escape_data ($sort[1]);
+						$sql = "SELECT `user`.*, `user_info`.`amount` FROM `user` LEFT JOIN `user_info` ON `user_info`.`user_id` = `user`.`id` ORDER BY `user`.`" . escape_data ($sort[0]) . "` " . escape_data ($sort[1]);
 						break;
 					default: // sort by quantity popularity
-						$sql = "SELECT `user`.*, `user_info`.`amount` FROM `user`, `user_info` WHERE `user_info`.`user_id` = `user`.`id` ORDER BY `user`.`id` ASC";
+						$sql = "SELECT `user`.*, `user_info`.`amount` FROM `user` LEFT JOIN `user_info` ON `user_info`.`user_id` = `user`.`id` ORDER BY `user`.`id` DESC";
 						break;
 				}
 			} else { // standard sort -- user_id, asc
-				$sql = "SELECT `user`.*, `user_info`.`amount` FROM `user`, `user_info` WHERE `user_info`.`user_id` = `user`.`id` ORDER BY `user`.`id` ASC";
+				$sql = "SELECT `user`.*, `user_info`.`amount` FROM `user` LEFT JOIN `user_info` ON `user_info`.`user_id` = `user`.`id` ORDER BY `user`.`id` DESC";
 			}
 			
 			// pull issues from db

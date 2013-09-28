@@ -14,6 +14,8 @@
 	*/
 
 	if (isset ($_POST['generate_ownership'])) {
+		
+		exit;
 
 		mysqli_query ($mysqli, "TRUNCATE TABLE `user_issue_index`");
 
@@ -75,6 +77,8 @@
 	}
 	
 	if ((isset ($_POST['import'])) && ($_FILES['upload']['type'] == 'text/csv')) {
+		
+		exit;
 
 		$tmpName = $_FILES['upload']['tmp_name'];
 
@@ -144,8 +148,33 @@
 		}
 	}
 
-	if (isset ($_POST['generate'])) {
-		echo 2;
+	if (isset ($_POST['generate_codes'])) {
+		require $_SERVER['DOCUMENT_ROOT'] . '/classes/class.generate.string.php';
+		$string = new string;
+		$r = mysqli_query ($mysqli, "SELECT `id` FROM `user`");
+		$a = 0;
+		while (list ($id) = mysqli_fetch_row ($r)) {
+			$insert = FALSE;
+			$code = $string -> generate (16);
+			list ($dupe) = mysqli_fetch_row (mysqli_query ("SELECT `code` FROM `promo_code` WHERE `code` = '" . $code . " LIMIT 1"));
+			if ($code !== $dupe) {
+				mysqli_query ($mysqli, "INSERT INTO `promo_code` (`code`, `user_id`, `date_issued`) VALUES ('" . $code . "', '" . $id . "', '" . time (). "')");
+				$a++;
+			} else {
+				$code = $string -> generate (16);
+				if ($code !== $dupe) {
+					mysqli_query ($mysqli, "INSERT INTO `promo_code` (`code`, `user_id`, `date_issued`) VALUES ('" . $code . "', '" . $id . "', '" . time (). "')");
+					$a++;
+				} else {
+					$code = $string -> generate (16);
+					if ($code !== $dupe) {
+						mysqli_query ($mysqli, "INSERT INTO `promo_code` (`code`, `user_id`, `date_issued`) VALUES ('" . $code . "', '" . $id . "', '" . time (). "')");
+						$a++;
+					}
+				}
+			}
+		}		
+		echo $a . " users have promo codes";
 	}
 
 ?>

@@ -15,11 +15,11 @@
 						
 			if (($this->user_id = $this->get_user_id()) == TRUE) {
 				
-				$data = array ('1', $this->generate_list()); // define success response
+				$data = array ('1', $this->generate_list(), 'csv'); // define success response
 
 			} else {
 
-				$data = array ('0', 'Unknown Device UUID'); // device does not exist. if no, define fail response.
+				$data = array ('0', 'Unknown Device UUID', 'text'); // device does not exist. if no, define fail response.
 
 			}
 
@@ -35,13 +35,8 @@
 
 		private function generate_list () { // get from chris what a valid promo code looks like.
 			GLOBAL $mysqli;
-			$result = array (); // create empty list array
-			$r = mysqli_query ($mysqli, "SELECT `issue_id` FROM `user_issue` WHERE `user_id` = '" . $this->user_id . "' ORDER BY `issue_id` ASC");
-			while ($row = mysqli_fetch_assoc ($r)) {
-				$result[] = $row['issue_id']; // add to list array
-			}
-			mysqli_free_result ($r);
-			return implode (',', $result); // return imploded list as csv
+			list ($result) = mysqli_fetch_row (mysqli_query ($mysqli, "SELECT `data` FROM `user_issue_index` WHERE `user_id` = '" . $this->user_id . "' LIMIT 1"));
+			return $result;
 		}
 
 	}
